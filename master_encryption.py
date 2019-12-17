@@ -1,6 +1,12 @@
 import caesar_cipher #must match the ACTUAL filename
 import transposition_cipher
 import affineCipher
+import simpleSubCipher
+
+#Your key is: HVMULGZPTWFDJSAYRQKICXENOB
+#T kpacdu vl hvdl ia eptkylq kajliptsz ts oacq lhq, 
+#lxls tg oacq lhq tk 1000 jtdlk heho, hsu ipl zaxlqsjlsi 
+#utkhzqllk etip iphi.
 
 print("Welcome to Mr. Schnaars' encryption program!")
 print("Please choose whether you would like to encrypt or decrypt.")
@@ -25,7 +31,8 @@ while user_input.title().strip() != 'Quit': #as long as they don't type 'Quit'
         user_input = input("Choose type of encryption:\n" +
                             "1. Caesar\n" +
                             "2. Transposition\n" +
-                            "3. Affine\n").title().strip()
+                            "3. Affine\n" +
+                            "4. Substitution Cipher\n").title().strip()
         
         if user_input in ['Caesar', '1', '1.']:
             key = int(input("Please choose a key, 1-25.\n").strip())
@@ -40,16 +47,30 @@ while user_input.title().strip() != 'Quit': #as long as they don't type 'Quit'
         
         elif user_input in ['Affine', '3', '3.']:
             plain_text = input("Please enter your message.\n")
-            have_key = input("Do you have an encryption key already?\n Y/N: ").upper().strip()
+            have_key = input("Do you have an encryption key already?\nY/N: ").upper().strip()
             if have_key in ['Y', 'YES']:
                 key = int(input("Enter key: ").strip())
+                print(affineCipher.encryptMessage(key, plain_text))
             elif have_key in ['N', 'NO']:
                 key = affineCipher.getRandomKey()
                 print("Your key is:", key)
+                print(affineCipher.encryptMessage(key, plain_text))
             else:
                 print("Please make a valid selection.")
-            print(affineCipher.encryptMessage(key, plain_text))
-        
+                   
+        elif user_input in ['Substitution Cipher', '4', '4.']:
+            plain_text = input("Please enter your message.\n")
+            have_key = input("Do you have an encryption key already?\nY/N: ").upper().strip()
+            if have_key in ['Y', 'YES']:
+                key = input("Enter key: ").upper().strip()
+                print(simpleSubCipher.encryptMessage(key, plain_text))
+            elif have_key in ['N', 'NO']:
+                key = simpleSubCipher.getRandomKey()
+                print("Your key is:", key)
+                print(simpleSubCipher.encryptMessage(key, plain_text))
+            else:
+                print("Please make a valid selection.")
+            
         else:
             print("Sorry, that was not a valid selection.")                    
     
@@ -57,7 +78,8 @@ while user_input.title().strip() != 'Quit': #as long as they don't type 'Quit'
         user_input = input("Choose type of decryption:\n" +
                             "1. Caesar\n" +
                             "2. Transposition\n" +
-                            "3. Affine\n").title().strip()
+                            "3. Affine\n" +
+                            "4. Substitution Cipher\n").title().strip()
         
         if user_input in ['Caesar', '1', '1.']:
             key = int(input("Please choose a key, 1-25.\n").strip())
