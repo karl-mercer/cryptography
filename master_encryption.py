@@ -27,6 +27,14 @@ while user_input.title().strip() != 'Quit': #as long as they don't type 'Quit'
     if user_input == 'Quit' or user_input == '99':
         user_input = 'Quit'
     
+################################################################################
+#
+#                               ENCRYPT BRANCH
+#
+################################################################################
+    
+    
+    
     elif user_input == 'Encrypt':
         user_input = input("Choose type of encryption:\n" +
                             "1. Caesar\n" +
@@ -57,7 +65,7 @@ while user_input.title().strip() != 'Quit': #as long as they don't type 'Quit'
                 print(affineCipher.encryptMessage(key, plain_text))
             else:
                 print("Please make a valid selection.")
-                   
+                          
         elif user_input in ['Substitution Cipher', '4', '4.']:
             plain_text = input("Please enter your message.\n")
             have_key = input("Do you have an encryption key already?\nY/N: ").upper().strip()
@@ -74,6 +82,7 @@ while user_input.title().strip() != 'Quit': #as long as they don't type 'Quit'
         else:
             print("Sorry, that was not a valid selection.")                    
     
+################################## DECRYPT BRANCH ##############################
     elif user_input == 'Decrypt':
         user_input = input("Choose type of decryption:\n" +
                             "1. Caesar\n" +
@@ -98,7 +107,8 @@ while user_input.title().strip() != 'Quit': #as long as they don't type 'Quit'
         
         else:
             print("Sorry, that was not a valid selection.")
-    
+
+################################## HACK BRANCH #################################        
     elif user_input == 'Hack' or user_input == '3':
         user_input = input("Choose type of decryption:\n" +
                             "1. Caesar\n" +
@@ -117,7 +127,8 @@ while user_input.title().strip() != 'Quit': #as long as they don't type 'Quit'
         
         else:
             print("Sorry, that was not a valid selection.")
-    
+
+################################## INVALID OPTIONS #############################        
     else: #output when user types an invalid choice
         print("Sorry, that is not a valid option.")
 
