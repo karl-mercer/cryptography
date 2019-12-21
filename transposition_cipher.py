@@ -1,5 +1,6 @@
 #Transposition Cipher
 import math
+import detectEnglish
 
 def transposition_encrypt(key, plain_text):
     #create a list to hold the ciphertext
@@ -14,7 +15,7 @@ def transposition_encrypt(key, plain_text):
             index += key #moving (key) number of characters
                          #down the plain_text string
                          
-    print("".join(ciphertext_list))
+    return ("".join(ciphertext_list))
        
 def transposition_decrypt(key, cipher_text):
     
@@ -41,21 +42,29 @@ def transposition_decrypt(key, cipher_text):
             index = 0 #moved back to first column
             row += 1 #moved down a row
 
-    print(''.join(plain_text))      
+    return ''.join(plain_text)      
     
     
 def transposition_hack(cipher_text):
     for key in range(1, len(cipher_text)):
-        transposition_decrypt(key, cipher_text)
-
+        print("Trying key #{}...".format(key))
+        
+        decrypted_text = transposition_decrypt(key, cipher_text)
+        
+        if detectEnglish.isEnglish(decrypted_text):
+            print("\nPossible encryption hack:")
+            print("Key {}:{}".format(key, decrypted_text[:100]))
+            print("\nEnter D if done, anything else to continue hacking:")
+            response = input(">> ")
+            
+            if response.strip().upper().startswith("D"):
+                return decrypted_text
+    
+    return None
     
     
     
+  
     
-    
-    
-    
-    
-    
-    
-    
+      
+          

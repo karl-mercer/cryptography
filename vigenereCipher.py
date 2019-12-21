@@ -3,15 +3,15 @@
 
 LETTERS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
 
-def encryptMessage(key, message):
-    return translateMessage(key, message, 'encrypt')
+def encrypt(key, message):
+    return translate(key, message, 'encrypt')
 
 
-def decryptMessage(key, message):
-    return translateMessage(key, message, 'decrypt')
+def decrypt(key, message):
+    return translate(key, message, 'decrypt')
 
 
-def translateMessage(key, message, mode):
+def translate(key, message, mode):
     translated = [] # Stores the encrypted/decrypted message string.
 
     keyIndex = 0
@@ -41,3 +41,7 @@ def translateMessage(key, message, mode):
             translated.append(symbol)
 
     return ''.join(translated)
+    
+    
+def hack(ciphertext):
+    pass

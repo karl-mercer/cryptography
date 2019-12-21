@@ -56,7 +56,7 @@ def isEnglish(message, wordPercentage=20, letterPercentage=85):
     numLetters = len(removeNonLetters(message))
     messageLettersPercentage = float(numLetters) / len(message) * 100
     lettersMatch = messageLettersPercentage >= letterPercentage
-    return wordsMatch and lettersMatch
+    return wordsMatch and lettersMatch #will return either T/F
     
     
     
