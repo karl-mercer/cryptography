@@ -2,6 +2,7 @@ import caesar_cipher #must match the ACTUAL filename
 import transposition_cipher
 import affineCipher
 import simpleSubCipher
+import vigenereCipher
 
 
 def type_selection():
@@ -19,13 +20,13 @@ def cipher_selection():
                             "3. Affine\n" +
                             "4. Substitution Cipher\n" +
                             "5. Vigenere\n" +
-                            "99. .. (to return to main menu)\n >> ").title().strip()
+                            "99. .. (return up a level)\n >> ").title().strip()
     return user_input
 
+def to_continue():
+    input("Press Enter to continue>> ")
 
-print("Welcome to Mr. Schnaars' encryption program!\n" + 
-        "Please choose whether you would like to encrypt or decrypt.\n" + 
-        "Then you will be asked to choose a type of cipher.\n")
+print("Welcome to Mr. Schnaars' encryption program!\n")
 
 print("Type 'Quit' to exit at any time.\n")
 
@@ -37,76 +38,109 @@ while user_input.title().strip() != 'Quit': #as long as they don't type 'Quit'
     
     if user_input in ['Quit', '99', 'Exit']:
         user_input = 'Quit'
-    
+   
+
 ###############################################################################
 #
 #                               ENCRYPT BRANCH
-#
 ################################################################################
     
     elif user_input in ['Encrypt', '1', '1.']:
         user_input = cipher_selection()
         
         if user_input in ['Caesar', '1', '1.']:
+            plain_text = input("Please enter your message.\n>> ").upper()
             valid = True
             while valid:
                 try:
-                    key = int(input("Please choose a key, 1-25.\n").strip())
-                    plain_text = input("Please enter your message.\n").upper()
+                    key = int(input("Please choose a key, 1-25.\nKey>> ").strip())
                     print(caesar_cipher.caesar_encrypt(key, plain_text))
+                    to_continue()
                     valid = False
                 except ValueError:
-                    print("Caesar cipher keys must be numeric.")
+                    print("ValueError: Caesar cipher keys must be numeric.")
                     continue
         
         elif user_input in ['Transposition', '2', '2.']:
+            plain_text = input("Please enter your message.\n>> ")
             valid = True
             while valid:
                 try:
-                    plain_text = input("Please enter your message.\n")
                     print("Choose a key between 1 and", int(len(plain_text)/2))
-                    key = int(input("Key: ").strip())
+                    key = int(input("Key>> ").strip())
                     print(transposition_cipher.transposition_encrypt(key, plain_text))
+                    to_continue()
                     valid = False
                 except ValueError:
-                    print("Transposition keys must be numeric.")
+                    print("ValueError: Transposition keys must be numeric.")
                     continue
         
         elif user_input in ['Affine', '3', '3.']:
-            plain_text = input("Please enter your message.\n")
-            have_key = input("Do you have an encryption key already?\nY/N: ").upper().strip()
-            if have_key in ['Y', 'YES']:
-                key = int(input("Enter key: ").strip())
-                print(affineCipher.encryptMessage(key, plain_text))
-            elif have_key in ['N', 'NO']:
-                key = affineCipher.getRandomKey()
-                print("Your key is:", key)
-                print(affineCipher.encryptMessage(key, plain_text))
-            else:
-                print("Please make a valid selection.")
+            plain_text = input("Please enter your message.\n>> ")
+            valid = True
+            while valid:
+                have_key = input("Do you have an encryption key already?\nY/N>> ").upper().strip()
+                if have_key.startswith("Y"):
+                    try:
+                        key = int(input("Enter key>> ").strip())
+                        print(affineCipher.encryptMessage(key, plain_text))
+                        to_continue()
+                        valid = False
+                    except ValueError:
+                        print("Affine keys must be numeric.")
+                        continue
+                elif have_key.startswith("N"):
+                    key = affineCipher.getRandomKey()
+                    print("Your key is:", key)
+                    to_continue()
+                    print(affineCipher.encryptMessage(key, plain_text))
+                    valid = False
+                else:
+                    print("Please make a valid selection.")
                         
         elif user_input in ['Substitution Cipher', '4', '4.']:
             plain_text = input("Please enter your message:\n>> ")
-            have_key = input("Do you have an encryption key already?\nY/N: ").upper().strip()
-            if have_key in ['Y', 'YES']:
-                key = input("Enter key:\n>> ").upper().strip()
-                print(simpleSubCipher.encryptMessage(key, plain_text))
-            elif have_key in ['N', 'NO']:
-                key = simpleSubCipher.getRandomKey()
-                print("Your key is:", key)
-                print(simpleSubCipher.encryptMessage(key, plain_text))
-            else:
-                print("Please make a valid selection.")
+            valid = True
+            while valid:
+                have_key = input("Do you have an encryption key already?\nY/N>> ").upper().strip()
+                if have_key.startswith("Y"):
+                    key = input("Enter key:\n>> ").upper().strip()
+                    if simpleSubCipher.keyIsValid(key):
+                        print(simpleSubCipher.encryptMessage(key, plain_text))
+                        valid = False
+                    else:
+                        print("Error: not a valid key.\nCheck that key contains all letters in the alphabet and has no duplicate letters.")
+                elif have_key.startswith("N"):
+                    key = simpleSubCipher.getRandomKey()
+                    print("Your key is:", key)
+                    to_continue()
+                    print(simpleSubCipher.encryptMessage(key, plain_text))
+                    valid = False
+                else:
+                    print("Please make a valid selection.")
         
         elif user_input in ['Vigenere', '5', '5.']:    
             plain_text = input("Please enter your message:\n>> ")
-            key = input("Enter your key:\n>> ")
+            valid = True
+            while valid:
+                key = input("Enter your key:\n>> ").upper().strip()
+                if vigenereCipher.keyIsValid(key):
+                    print(vigenereCipher.encrypt(key, plain_text))
+                    to_continue()
+                    valid = False
+                else:
+                    print("Error: Vigenere cipher keys may only contain letters.")
             
         else:
             print("Sorry, that was not a valid selection.")
             user_input = cipher_selection()                   
+
     
-################################## DECRYPT BRANCH ##############################
+###############################################################################
+#
+#                               DECRYPT BRANCH
+#
+###############################################################################
     elif user_input == 'Decrypt':
         user_input = input("Choose type of decryption:\n" +
                             "1. Caesar\n" +
@@ -137,7 +171,11 @@ while user_input.title().strip() != 'Quit': #as long as they don't type 'Quit'
         else:
             print("Sorry, that was not a valid selection.")
 
-################################## HACK BRANCH #################################        
+###############################################################################
+#
+#                               HACK BRANCH
+#
+###############################################################################
     elif user_input == 'Hack' or user_input == '3':
         user_input = cipher_selection()
         

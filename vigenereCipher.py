@@ -41,7 +41,16 @@ def translate(key, message, mode):
             translated.append(symbol)
 
     return ''.join(translated)
-    
+
+
+def keyIsValid(key):
+    key = key.upper()
+    for letter in key:
+        if letter in LETTERS:
+            pass
+        else:
+            return False
+    return True
     
 def hack(ciphertext):
     pass
