@@ -2,8 +2,7 @@ import caesar_cipher #must match the ACTUAL filename
 import transposition_cipher
 import affineCipher, affineHacker
 import simpleSubCipher
-import vigenereCipher, vigenereHacker, vigenereDictionaryCipher
-
+import vigenereCipher, vigenereHacker, vigenereDictionaryHacker
 
 def type_selection():
     user_input = input("Choose type of decryption:\n" +
@@ -20,7 +19,7 @@ def cipher_selection():
                             "3. Affine\n" +
                             "4. Substitution\n" +
                             "5. Vigenere\n" +
-                            "99. .. (return up a level)\n >> ").title().strip()
+                            "99. .. (return up a level)\n>> ").title().strip()
     return user_input
 
 def to_continue():
@@ -181,21 +180,29 @@ while user_input.title().strip() != 'Quit': #as long as they don't type 'Quit'
         user_input = cipher_selection()
         
         if user_input in ['Caesar', '1', '1.']:
-            cipher_text = input("Please enter your message.\n")
+            cipher_text = input("Please enter your message to be hacked.\n>> ")
             caesar_cipher.cc_hack(cipher_text)
         
         elif user_input in ['Transposition', '2', '2.']:
-            cipher_text = input("Please enter your message.\n")
+            cipher_text = input("Please enter your message to be hacked.\n>> ")
             transposition_cipher.transposition_hack(cipher_text)
         
         elif user_input in ['Affine', '3', '3.']:
-            pass
+            cipher_text = input("Please enter your message to be hacked.\n>> ")
+            print(affineHacker.hackAffine(cipher_text))
 
         elif user_input in ['Substitution', '4', '4.']:
             pass
 
         elif user_input in ['Vigenere', '5', '5.']:
-            pass
+            cipher_text = input("Please enter your message to be hacked.\n>> ")
+            user_input = input("Would you like to perform a dictionary hack or a brute-force hack?\n>> ")
+            if user_input.upper().startswith('D'):
+                print(vigenereDictionaryHacker.hackVigenereDictionary(cipher_text))
+            elif user_input.upper().startswith('B'):
+                print(vigenereHacker.hackVigenere(cipher_text))
+            else:
+                print("Sorry, that was not a valid selection.")
         
         else:
             print("Sorry, that was not a valid selection.")

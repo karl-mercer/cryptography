@@ -1,7 +1,7 @@
 # Affine Cipher Hacker
 # https://www.nostarch.com/crackingcodes (BSD Licensed)
 
-import pyperclip, affineCipher, detectEnglish, cryptomath
+import affineCipher, detectEnglish, cryptomath
 
 SILENT_MODE = False
 
