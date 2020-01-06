@@ -1,8 +1,8 @@
 import caesar_cipher #must match the ACTUAL filename
 import transposition_cipher
-import affineCipher
+import affineCipher, affineHacker
 import simpleSubCipher
-import vigenereCipher
+import vigenereCipher, vigenereHacker, vigenereDictionaryCipher
 
 
 def type_selection():
@@ -18,7 +18,7 @@ def cipher_selection():
                             "1. Caesar\n" +
                             "2. Transposition\n" +
                             "3. Affine\n" +
-                            "4. Substitution Cipher\n" +
+                            "4. Substitution\n" +
                             "5. Vigenere\n" +
                             "99. .. (return up a level)\n >> ").title().strip()
     return user_input
@@ -141,32 +141,33 @@ while user_input.title().strip() != 'Quit': #as long as they don't type 'Quit'
 #                               DECRYPT BRANCH
 #
 ###############################################################################
-    elif user_input == 'Decrypt':
-        user_input = input("Choose type of decryption:\n" +
-                            "1. Caesar\n" +
-                            "2. Transposition\n" +
-                            "3. Affine\n" +
-                            "4. Substitution Cipher\n").title().strip()
+    elif user_input in ['Decrypt', '2', '2.']:
+        user_input = cipher_selection()
         
         if user_input in ['Caesar', '1', '1.']:
-            key = int(input("Please choose a key, 1-25.\n").strip())
-            cipher_text = input("Please enter your message.\n").upper()
+            key = int(input("Please choose a key, 1-25.\nKey>> ").strip())
+            cipher_text = input("Please enter your message.\n>> ").upper()
             print(caesar_cipher.caesar_decrypt(key, cipher_text))
         
         elif user_input in ['Transposition', '2', '2.']:
-            cipher_text = input("Please enter your message.\n")
-            key = int(input("Please enter your encryption key.\n").strip())
+            cipher_text = input("Please enter your message.\n>> ")
+            key = int(input("Please enter your encryption key.\nKey>> ").strip())
             print(transposition_cipher.transposition_decrypt(key, cipher_text))
         
         elif user_input in ['Affine', '3', '3.']:
-            cipher_text = input("Please enter your encrypted message.\n")
-            key = int(input("Enter key: ").strip())
+            cipher_text = input("Please enter your encrypted message.\n>> ")
+            key = int(input("Please enter your encryption key.\nKey>> ").strip())
             print(affineCipher.decryptMessage(key, cipher_text))
             
         elif user_input in ["Substitution Cipher", "Substitution", "4", "4."]:
-            cipher_text = input("Please enter your encrypted message.\n")
-            key = input("Enter key: ").strip().upper()
+            cipher_text = input("Please enter your encrypted message.\n>> ")
+            key = input("Please enter your encryption key.\nKey>> ").strip().upper()
             print(simpleSubCipher.decryptMessage(key, cipher_text))
+
+        elif user_input in ['Vigenere', '5', '5.']:
+            cipher_text = input("Please enter your encrypted message.\n>> ")
+            key = input("Please enter your encryption key.\n>> ")
+            print(vigenereCipher.decrypt(key, cipher_text))
         
         else:
             print("Sorry, that was not a valid selection.")
@@ -176,7 +177,7 @@ while user_input.title().strip() != 'Quit': #as long as they don't type 'Quit'
 #                               HACK BRANCH
 #
 ###############################################################################
-    elif user_input == 'Hack' or user_input == '3':
+    elif user_input in ['Hack', '3', '3.']:
         user_input = cipher_selection()
         
         if user_input in ['Caesar', '1', '1.']:
@@ -187,7 +188,14 @@ while user_input.title().strip() != 'Quit': #as long as they don't type 'Quit'
             cipher_text = input("Please enter your message.\n")
             transposition_cipher.transposition_hack(cipher_text)
         
-        #elif 
+        elif user_input in ['Affine', '3', '3.']:
+            pass
+
+        elif user_input in ['Substitution', '4', '4.']:
+            pass
+
+        elif user_input in ['Vigenere', '5', '5.']:
+            pass
         
         else:
             print("Sorry, that was not a valid selection.")
