@@ -6,26 +6,6 @@ import re, copy, simpleSubCipher, wordPatterns, makeWordPatterns
 LETTERS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
 nonLettersOrSpacePattern = re.compile('[^A-Z\s]')
 
-def main():
-    message = 'Sy l nlx sr pyyacao l ylwj eiswi upar lulsxrj isr sxrjsxwjr, ia esmm rwctjsxsza sj wmpramh, lxo txmarr jia aqsoaxwa sr pqaceiamnsxu, ia esmm caytra jp famsaqa sj. Sy, px jia pjiac ilxo, ia sr pyyacao rpnajisxu eiswi lyypcor l calrpx ypc lwjsxu sx lwwpcolxwa jp isr sxrjsxwjr, ia esmm lwwabj sj aqax px jia rmsuijarj aqsoaxwa. Jia pcsusx py nhjir sr agbmlsxao sx jisr elh. -Facjclxo Ctrramm'
-
-    # Determine the possible valid ciphertext translations:
-    print('Hacking...')
-    letterMapping = hackSimpleSub(message)
-
-    # Display the results to the user:
-    print('Mapping:')
-    print(letterMapping)
-    print()
-    print('Original ciphertext:')
-    print(message)
-    print()
-    print('Copying hacked message to clipboard:')
-    hackedMessage = decryptWithCipherletterMapping(message, letterMapping)
-    pyperclip.copy(hackedMessage)
-    print(hackedMessage)
-
-
 def getBlankCipherletterMapping():
     # Returns a dictionary value that is a blank cipherletter mapping.
     return {'A': [], 'B': [], 'C': [], 'D': [], 'E': [], 'F': [], 'G': [], 'H': [], 'I': [], 'J': [], 'K': [], 'L': [], 'M': [], 'N': [], 'O': [], 'P': [], 'Q': [], 'R': [], 'S': [], 'T': [], 'U': [], 'V': [], 'W': [], 'X': [], 'Y': [], 'Z': []}
@@ -143,10 +123,30 @@ def decryptWithCipherletterMapping(ciphertext, letterMapping):
             ciphertext = ciphertext.replace(cipherletter.lower(), '_')
             ciphertext = ciphertext.replace(cipherletter.upper(), '_')
     key = ''.join(key)
+    hacked_message = simpleSubCipher.decryptMessage(key, ciphertext)
 
     # With the key we've created, decrypt the ciphertext:
-    return simpleSubCipher.decryptMessage(key, ciphertext)
+    return hacked_message, key
 
 
-if __name__ == '__main__':
-    main()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

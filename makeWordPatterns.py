@@ -21,31 +21,4 @@ def getWordPattern(word):
             nextNum += 1
         wordPattern.append(letterNums[letter])
     return '.'.join(wordPattern)
-
-
-def main():
-    allPatterns = {}
-
-    fo = open('dictionary.txt')
-    wordList = fo.read().split('\n')
-    fo.close()
-
-    for word in wordList:
-        # Get the pattern for each string in wordList:
-        pattern = getWordPattern(word)
-
-        if pattern not in allPatterns:
-            allPatterns[pattern] = [word]
-        else:
-            allPatterns[pattern].append(word)
-
-    # This is code that writes code. The wordPatterns.py file contains
-    # one very, very large assignment statement:
-    fo = open('wordPatterns.py', 'w')
-    fo.write('allPatterns = ')
-    fo.write(pprint.pformat(allPatterns))
-    fo.close()
-
-
-if __name__ == '__main__':
-    main()
+    

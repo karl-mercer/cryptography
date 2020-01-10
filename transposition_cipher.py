@@ -53,7 +53,7 @@ def transposition_hack(cipher_text):
         
         if detectEnglish.isEnglish(decrypted_text):
             print("\nPossible encryption hack:")
-            print("Key {}:{}".format(key, decrypted_text[:100]))
+            print("Key {}:{}".format(key, decrypted_text[:200]))
             print("\nEnter D if done, anything else to continue hacking:")
             response = input(">> ")
             
